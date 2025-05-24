@@ -77,7 +77,7 @@ $filteredTasks = match ($filter) {
 
     <!-- Navbar -->
     <nav>
-        <div class="nav-title">📝 To-Do App</div>
+        <div class="nav-title">📝 To-Do App Interaktif </div>
         <ul>
             <li><a href="index.php" <?= $filter === 'all' ? 'class="active"' : '' ?>>Semua</a></li>
             <li><a href="?filter=done" <?= $filter === 'done' ? 'class="active"' : '' ?>>Selesai</a></li>
