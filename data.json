@@ -1,1 +1,17 @@
-[]
+[
+    {
+        "id": "68315f72a499a",
+        "text": "hehe",
+        "done": false
+    },
+    {
+        "id": "68315f7d97b1a",
+        "text": "huhu",
+        "done": false
+    },
+    {
+        "id": "68315f8337121",
+        "text": "tidur",
+        "done": true
+    }
+]

@@ -4,18 +4,17 @@ $tasks = file_exists($dataFile) ? json_decode(file_get_contents($dataFile), true
 
 // Tambah tugas
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'create') {
-    $newTask = [
+    $tasks[] = [
         'id' => uniqid(),
         'text' => htmlspecialchars($_POST['task']),
         'done' => false
     ];
-    $tasks[] = $newTask;
     file_put_contents($dataFile, json_encode($tasks, JSON_PRETTY_PRINT));
     header('Location: index.php');
     exit();
 }
 
-// Update status selesai dari checkbox
+// Toggle selesai
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'toggle') {
     foreach ($tasks as &$task) {
         if ($task['id'] === $_POST['id']) {
@@ -27,53 +26,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'toggle') {
     exit();
 }
 
-// Hapus tugas
+// Hapus
 if (isset($_GET['delete'])) {
-    $tasks = array_filter($tasks, fn($task) => $task['id'] !== $_GET['delete']);
+    $tasks = array_filter($tasks, fn($t) => $t['id'] !== $_GET['delete']);
     file_put_contents($dataFile, json_encode(array_values($tasks), JSON_PRETTY_PRINT));
     header('Location: index.php');
     exit();
 }
 
-// Form edit
+// Edit
 $editTask = null;
 if (isset($_GET['edit'])) {
-    foreach ($tasks as $task) {
-        if ($task['id'] === $_GET['edit']) {
-            $editTask = $task;
+    foreach ($tasks as $t) {
+        if ($t['id'] === $_GET['edit']) {
+            $editTask = $t;
             break;
         }
     }
 }
 
-// Proses update teks
+// Update teks
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'update') {
-    foreach ($tasks as &$task) {
-        if ($task['id'] === $_POST['id']) {
-            $task['text'] = htmlspecialchars($_POST['task']);
+    foreach ($tasks as &$t) {
+        if ($t['id'] === $_POST['id']) {
+            $t['text'] = htmlspecialchars($_POST['task']);
         }
     }
     file_put_contents($dataFile, json_encode($tasks, JSON_PRETTY_PRINT));
     header('Location: index.php');
     exit();
 }
+
+// Filter tampilan
+$filter = $_GET['filter'] ?? 'all';
+$filteredTasks = match ($filter) {
+    'done' => array_filter($tasks, fn($t) => $t['done']),
+    'undone' => array_filter($tasks, fn($t) => !$t['done']),
+    default => $tasks
+};
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>To-Do List</title>
+    <title>To-Do List Interaktif</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1>To-Do List</h1>
-    </header> 
+
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-title">📝 To-Do App</div>
+        <ul>
+            <li><a href="index.php" <?= $filter === 'all' ? 'class="active"' : '' ?>>Semua</a></li>
+            <li><a href="?filter=done" <?= $filter === 'done' ? 'class="active"' : '' ?>>Selesai</a></li>
+            <li><a href="?filter=undone" <?= $filter === 'undone' ? 'class="active"' : '' ?>>Belum Selesai</a></li>
+        </ul>
+    </nav>
 
     <main>
+        <!-- Form -->
         <?php if ($editTask): ?>
-            <form method="POST">
+            <form method="POST" class="form-edit">
                 <input type="hidden" name="action" value="update">
                 <input type="hidden" name="id" value="<?= $editTask['id'] ?>">
                 <input type="text" name="task" value="<?= $editTask['text'] ?>" required>
@@ -81,16 +96,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'update') {
                 <a href="index.php">Batal</a>
             </form>
         <?php else: ?>
-            <form method="POST">
+            <form method="POST" class="form-create">
                 <input type="hidden" name="action" value="create">
-                <input type="text" name="task" placeholder="Tambah tugas..." required>
+                <input type="text" name="task" placeholder="Tugas baru..." required>
                 <button type="submit">Tambah</button>
             </form>
         <?php endif; ?>
 
-        <ul class="task-list">
-            <?php foreach ($tasks as $task): ?>
-                <li class="<?= $task['done'] ? 'done' : '' ?>">
+        <!-- Daftar Tugas -->
+        <div class="task-list">
+            <?php foreach ($filteredTasks as $task): ?>
+                <div class="task-item <?= $task['done'] ? 'done' : '' ?>">
                     <form method="POST" class="checkbox-form">
                         <input type="hidden" name="action" value="toggle">
                         <input type="hidden" name="id" value="<?= $task['id'] ?>">
@@ -102,9 +118,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'update') {
                         <a href="?edit=<?= $task['id'] ?>">Edit</a>
                         <a href="?delete=<?= $task['id'] ?>" class="delete">Hapus</a>
                     </div>
-                </li>
+                </div>
             <?php endforeach; ?>
-        </ul>
+        </div>
     </main>
+
 </body>
 </html>

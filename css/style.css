@@ -1,91 +1,108 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
+/* Layout dasar */
+body,
+html {
   margin: 0;
   padding: 0;
-  background-image: url('../pict/todolist.jpg'); /* sesuaikan path */
-  background-size: cover; /* agar gambar menutupi seluruh layar */
-  background-repeat: no-repeat; /* tidak diulang */
-  background-position: center; /* posisi tengah */
+  font-family: Arial, sans-serif;
+  background: url('../images/background.jpg') no-repeat center center fixed;
+  background-size: cover;
 }
 
-header {
-  background: #007bff;
+/* Navbar */
+nav {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 0.75em 2em;
   color: white;
-  padding: 1em;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+nav .nav-title {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1em;
+}
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 0.3em 0.8em;
+  border-radius: 4px;
+}
+nav ul li a:hover,
+nav ul li a.active {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Konten utama */
 main {
   max-width: 600px;
   margin: 2em auto;
-  padding: 1em;
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1.5em;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-form {
+/* Form */
+form.form-create,
+form.form-edit {
   display: flex;
   gap: 0.5em;
   margin-bottom: 1em;
 }
-
 form input[type='text'] {
   flex: 1;
   padding: 0.5em;
-  border: 1px solid #ccc;
   border-radius: 4px;
+  border: 1px solid #ccc;
 }
-
 form button {
   padding: 0.5em 1em;
-  background: #007bff;
-  border: none;
+  background-color: #007bff;
   color: white;
+  border: none;
   border-radius: 4px;
   cursor: pointer;
 }
-
 form button:hover {
-  background: #0056b3;
+  background-color: #0056b3;
 }
 
+/* Daftar tugas */
 .task-list {
-  list-style: none;
-  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
-
-.task-list li {
-  padding: 0.75em;
-  margin-bottom: 0.5em;
-  background: #f9f9f9;
+.task-item {
+  background: #fff;
   border: 1px solid #ddd;
+  padding: 1em;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: 4px;
 }
-
-.task-list li.done span {
+.task-item.done span {
   text-decoration: line-through;
   color: gray;
 }
-
 .checkbox-form {
   display: flex;
   align-items: center;
   gap: 0.5em;
+  flex: 1;
   margin: 0;
 }
-
 .actions a {
-  margin-left: 10px;
+  margin-left: 0.5em;
   text-decoration: none;
   color: #007bff;
-  font-size: 0.9em;
 }
-
 .actions a.delete {
   color: red;
 }
