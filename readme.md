@@ -12,11 +12,15 @@ Aplikasi sederhana berbasis PHP untuk mencatat tugas harian.
 
 - Hapus tugas
 
+- Edit Tugas
+
 index.php-halaman utama
 
 ## Struktur Folder
 
-assets/file CSS/JS jika ada
+- .vscode/launch.json
+- css/style.css
+- Screenshot/1.jpg, 2.jpg, 3.jpg, 4.jpg (tidak ada hubungan dengan code)
 
 ##Cara Menjalankan
 
