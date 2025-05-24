@@ -1,0 +1,87 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: #007bff;
+  color: white;
+  padding: 1em;
+  text-align: center;
+}
+
+main {
+  max-width: 600px;
+  margin: 2em auto;
+  padding: 1em;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+  display: flex;
+  gap: 0.5em;
+  margin-bottom: 1em;
+}
+
+form input[type='text'] {
+  flex: 1;
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form button {
+  padding: 0.5em 1em;
+  background: #007bff;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background: #0056b3;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task-list li {
+  padding: 0.75em;
+  margin-bottom: 0.5em;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.task-list li.done span {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.checkbox-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0;
+}
+
+.actions a {
+  margin-left: 10px;
+  text-decoration: none;
+  color: #007bff;
+  font-size: 0.9em;
+}
+
+.actions a.delete {
+  color: red;
+}
