@@ -3,6 +3,10 @@ body {
   background: #f4f4f4;
   margin: 0;
   padding: 0;
+  background-image: url('../pict/todolist.jpg'); /* sesuaikan path */
+  background-size: cover; /* agar gambar menutupi seluruh layar */
+  background-repeat: no-repeat; /* tidak diulang */
+  background-position: center; /* posisi tengah */
 }
 
 header {

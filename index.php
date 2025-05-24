@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'update') {
 <body>
     <header>
         <h1>To-Do List</h1>
-    </header>
+    </header> 
 
     <main>
         <?php if ($editTask): ?>
